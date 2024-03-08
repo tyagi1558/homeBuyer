@@ -6,19 +6,28 @@ import authRouter from './routes/auth.route.js';
 import listingRouter from './routes/listing.route.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
+
+import cors from 'cors';
+
 dotenv.config();
-
-mongoose.connect(process.env.MONGO)
-  .then(() => {
-    console.log('Connected to MongoDB!');
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(
+      "mongodb+srv://Anmol908:anmol%40123@cluster.dho9xwt.mongodb.net/?retryWrites=true&w=majority"
+    );
+    console.log("Database connected successully");
+  } catch (error) {
+    console.log(error.stack);
+    console.log("Error in Connection");
+  }
+};
 const __dirname = path.resolve();
 
+connectDB();
+
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 
